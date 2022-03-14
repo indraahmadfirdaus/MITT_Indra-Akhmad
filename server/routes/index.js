@@ -43,12 +43,12 @@ router.route("/api/logout").delete(UserController.logout);
 // UserSkillController - with auth
 router
   .route("/api/user-skill")
-  .get(UserSkillController.getUserSkill)
+  .get(authentication, UserSkillController.getUserSkill)
   .post(authentication, UserSkillController.createUserSkill);
 
 router
   .route("/api/user-skill/:id")
-  .put(UserSkillController.updateUserSkill)
-  .delete(UserSkillController.deleteUserSkill);
+  .put(authentication, UserSkillController.updateUserSkill)
+  .delete(authentication, UserSkillController.deleteUserSkill);
 
 module.exports = router;

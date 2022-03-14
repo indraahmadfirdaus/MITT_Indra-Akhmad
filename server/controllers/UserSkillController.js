@@ -55,7 +55,20 @@ class UserSkillController {
     }
   }
 
-  static async getUserSkill(req, res, next) {}
+  static async getUserSkill(req, res, next) {
+    try {
+      const skills = await UserSkill.findAll({
+        where: { userId: req.loggedUser.id },
+      });
+      res.status(200).json({
+        data: skills,
+        status: "success",
+        message: "success find all skills",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = UserSkillController;
