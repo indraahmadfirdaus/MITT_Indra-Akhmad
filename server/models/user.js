@@ -1,7 +1,6 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
+const { hashPassword } = require("../helpers/bcrypt");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -13,12 +12,34 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  User.init({
-    username: DataTypes.STRING,
-    password: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'User',
-  });
+  User.init(
+    {
+      username: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: {
+            msg: "username must not be empty",
+          },
+        },
+      },
+      password: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: {
+            msg: "password must not be empty",
+          },
+        },
+      },
+    },
+    {
+      sequelize,
+      modelName: "User",
+      hooks: {
+        beforeCreate: (instance, options) => {
+          instance.password = hashPassword(instance.password);
+        },
+      },
+    }
+  );
   return User;
 };
