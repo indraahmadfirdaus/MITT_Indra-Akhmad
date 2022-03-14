@@ -35,6 +35,7 @@ router
 // User
 router.route("/api/register").post(UserController.register);
 router.route("/api/login").post(UserController.login);
+router.route("/api/profile").get(authentication, UserController.getLoggedUser);
 router
   .route("/api/update-profile")
   .put(authentication, UserController.updateProfile);

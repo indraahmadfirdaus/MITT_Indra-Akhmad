@@ -47,6 +47,21 @@ class UserController {
     }
   }
 
+  static async getLoggedUser(req, res, next) {
+    try {
+      const user = await User.findOne({
+        where: { id: req.loggedUser.id },
+      });
+      res.status(200).json({
+        data: user,
+        status: "success",
+        message: "successfully get logged user",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async updateProfile(req, res, next) {
     try {
       const found = await UserProfile.findOne({

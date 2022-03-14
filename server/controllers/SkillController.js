@@ -56,7 +56,7 @@ class SkillController {
         }
       );
       res.status(200).json({
-        data: skills[1][0],
+        // data: skills[1][0],
         status: "success",
         message: "success update skill",
       });
